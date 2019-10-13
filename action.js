@@ -3,6 +3,7 @@ let currentList;
 
 $(function() {
     $('.lists').sortable({
+        //https://stackoverflow.com/questions/1601827/jquery-ui-sortable-how-to-determine-current-location-and-new-location-in-update
         start: (e, ui) => {
             $(this).attr('data-previndex', ui.item.index());
         },
@@ -47,15 +48,17 @@ function removeTask(index) {
 function saveList(e) {
     if(e.which === 13) {
         let myValue = $('#addList').val();
-        let tempObject = new List(myValue, allLists.length);
-        currentList = tempObject;
-        $('.tasks').html('');
-        allLists.push(tempObject);
-        if(allLists.length > 0) {
-            $('.add-task').show();
+        if(!checkDuplicateName(myValue, allLists)) {
+            let tempObject = new List(myValue, allLists.length);
+            currentList = tempObject;
+            $('.tasks').html('');
+            allLists.push(tempObject);
+            if(allLists.length > 0) {
+                $('.add-task').show();
+            }
+            printLists();
+            $('#addList').val('');
         }
-        printLists();
-        $('#addList').val('');
     }
 }
 
@@ -71,22 +74,27 @@ function removeList(index, el) {
             currentList = allLists[index - 1];
             printTasks();
             printLists();
+        } else if (allLists.length > 0 && allLists[index - 1] === undefined) {
+            currentList = allLists[index];
+            printTasks();
+            printLists();
         } else {
             $('.add-task').hide();
             $('.tasks').html('');
+            $('.title').html('');
         }
     });
 }
 
 function setCurrentList(index) {
-    if (currentList.name !== allLists[index].name) {
-        currentList = allLists[index];
-        printTasks();
-    }
+    currentList = allLists[index];
+    $('.title').html(currentList.name);
+    printTasks();
 }
 
 function printLists() {
     $('.lists').html('');
+    $('.title').html(currentList.name);
     $.each(allLists, (index, list) => {$('.lists').prepend(
         `<div class='new-list'>
             <i class="fas fa-trash-alt" onclick='removeList(${index}, $(this).parent())'></i>
@@ -118,4 +126,15 @@ function updateArray(oldIndex, newIndex) {
 
     let l = allLists.splice(oldIndex, 1);
     allLists.splice(newIndex, 0, l[0]);
+}
+
+function checkDuplicateName(value, array) {
+    for (let obj of array) {
+        if (obj.name === value) {
+            alert(`You can't have more than one list with the same name`);
+            return true;
+        }
+    }
+
+    return false;
 }
