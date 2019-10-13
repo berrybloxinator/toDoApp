@@ -3,8 +3,15 @@ let currentList;
 
 $(function() {
     $('.lists').sortable({
-        stop: () => {
-            updateIndex();
+        start: (e, ui) => {
+            $(this).attr('data-previndex', ui.item.index());
+        },
+
+        stop: (e, ui) => {
+            let oldIndex = $(this).attr('data-previndex');
+            $(this).removeAttr('data-previndex');
+            let newIndex = ui.item.index();
+            updateArray(oldIndex, newIndex);
         }
     });
 });
@@ -60,7 +67,7 @@ function removeList(index, el) {
     },300, function() {
         $(el).remove();
         allLists.splice(index, 1);
-        if (allLists.length > 0) {
+        if (allLists.length > 0 && allLists[index - 1] !== undefined) {
             currentList = allLists[index - 1];
             printTasks();
             printLists();
@@ -99,8 +106,16 @@ function printTasks() {
     }
 }
 
-function updateIndex() {
+function updateArray(oldIndex, newIndex) {
+    let del = $('.lists .new-list i').toArray();
+    let listText = $('.lists .new-list div').toArray();
+    let tempLength = allLists.length - 1;
     for (let i = 0; i < allLists.length; i++) {
-        $(`.lists .`).attr('onclick', '');
+        $(del[tempLength]).attr('onclick', `removeList(${i}, $(this).parent())`);
+        $(listText[tempLength]).attr('onclick', `setCurrentList(${i})`);
+        tempLength--;
     }
+
+    let l = allLists.splice(oldIndex, 1);
+    allLists.splice(newIndex, 0, l[0]);
 }
