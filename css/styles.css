@@ -57,18 +57,37 @@ html, body {
     height: 100%;
     width: 70%;
     overflow: auto; }
+    .container .right-container .clear-container {
+      margin: 0 auto;
+      width: 150px; }
+      .container .right-container .clear-container .clearCompletedTasks {
+        width: 150px;
+        display: none; }
+        .container .right-container .clear-container .clearCompletedTasks button {
+          outline: none;
+          border: 1px solid #ffffff;
+          height: 30px;
+          width: 150px;
+          cursor: pointer;
+          border-radius: 8px;
+          background-color: #303030;
+          color: #ffffff; }
     .container .right-container .title {
       text-align: center;
-      font-size: 22px; }
+      font-size: 22px;
+      height: 40px; }
     .container .right-container .tasks {
       width: 85%;
       margin: 15px auto; }
+      .container .right-container .tasks .new-task {
+        border: 1px solid #ffffff;
+        padding: 5px;
+        height: 30px; }
     .container .right-container .add-task-container {
       height: 40px;
       margin: 15px auto;
       width: 70%; }
       .container .right-container .add-task-container .add-task {
-        cursor: pointer;
         width: 100%;
         border-radius: 8px;
         border: 1px solid #ffffff;

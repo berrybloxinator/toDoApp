@@ -19,7 +19,7 @@
             <div class='add-list'>
                 <input type='text' id='addList' placeholder='Add new list' onkeyup='saveList(event)'>
             </div>
-            <div class='lists'>
+            <div id='lists'>
 
             </div>
         </div>
@@ -34,6 +34,11 @@
             </div>
             <div class='tasks'>
 
+            </div>
+            <div class='clear-container'>
+                <div class='clearCompletedTasks' onclick='clearCompletedTasks()'>
+                    <button>Clear Completed Tasks</button>
+                </div>
             </div>
         </div>
     </div>
