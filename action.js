@@ -34,10 +34,12 @@ class Task {
 function addTask(e) {
     if (e.which === 13) {
         let myValue = $('#addTask').val();
-        let tempTask = new Task(myValue);
-        currentList.tasks.push(tempTask);
-        printTasks();
-        $('#addTask').val('');
+        if(!checkDuplicateName(myValue, currentList.tasks)) {
+            let tempTask = new Task(myValue);
+            currentList.tasks.push(tempTask);
+            printTasks();
+            $('#addTask').val('');
+        }
     }
 }
 
@@ -70,12 +72,12 @@ function removeList(index, el) {
     },300, function() {
         $(el).remove();
         allLists.splice(index, 1);
-        if (allLists.length > 0 && allLists[index - 1] !== undefined) {
-            currentList = allLists[index - 1];
+        if (allLists.length > 0 && allLists[index] !== undefined) {
+            currentList = allLists[index];
             printTasks();
             printLists();
-        } else if (allLists.length > 0 && allLists[index - 1] === undefined) {
-            currentList = allLists[index];
+        } else if (allLists.length > 0 && allLists[index] === undefined) {
+            currentList = allLists[index - 1];
             printTasks();
             printLists();
         } else {
@@ -95,7 +97,7 @@ function setCurrentList(index) {
 function printLists() {
     $('.lists').html('');
     $('.title').html(currentList.name);
-    $.each(allLists, (index, list) => {$('.lists').prepend(
+    $.each(allLists, (index, list) => {$('.lists').append(
         `<div class='new-list'>
             <i class="fas fa-trash-alt" onclick='removeList(${index}, $(this).parent())'></i>
             <div class='list-text' onclick='setCurrentList(${index})'>${list.name}</div>
@@ -106,7 +108,7 @@ function printLists() {
 function printTasks() {
     $('.tasks').html('');
     if (currentList.tasks.length > 0) {
-        $.each(currentList.tasks, (index, task) => {$('.tasks').prepend(
+        $.each(currentList.tasks, (index, task) => {$('.tasks').append(
             `<div class='new-task'>
                 ${task.name}
             </div>`
@@ -117,11 +119,9 @@ function printTasks() {
 function updateArray(oldIndex, newIndex) {
     let del = $('.lists .new-list i').toArray();
     let listText = $('.lists .new-list div').toArray();
-    let tempLength = allLists.length - 1;
     for (let i = 0; i < allLists.length; i++) {
-        $(del[tempLength]).attr('onclick', `removeList(${i}, $(this).parent())`);
-        $(listText[tempLength]).attr('onclick', `setCurrentList(${i})`);
-        tempLength--;
+        $(del[i]).attr('onclick', `removeList(${i}, $(this).parent())`);
+        $(listText[i]).attr('onclick', `setCurrentList(${i})`);
     }
 
     let l = allLists.splice(oldIndex, 1);
@@ -131,7 +131,7 @@ function updateArray(oldIndex, newIndex) {
 function checkDuplicateName(value, array) {
     for (let obj of array) {
         if (obj.name === value) {
-            alert(`You can't have more than one list with the same name`);
+            alert(`You can't have more than one item with the same name`);
             return true;
         }
     }

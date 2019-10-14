@@ -58,7 +58,8 @@ html, body {
     width: 70%;
     overflow: auto; }
     .container .right-container .title {
-      text-align: center; }
+      text-align: center;
+      font-size: 22px; }
     .container .right-container .tasks {
       width: 85%;
       margin: 15px auto; }
