@@ -132,10 +132,34 @@ function printTasks() {
     if (currentList.tasks.length > 0) {
         $.each(currentList.tasks, (index, task) => {$('.tasks').append(
             `<div class='new-task'>
-                <i class='fas fa-trash-alt' onclick='currentList.removeTask(${index}, this);printTasks();'></i>${task.name}<input type='checkbox'>
+                <i class='fas fa-trash-alt' onclick='currentList.removeTask(${index}, this);printTasks();'></i>
+                <div class='task-text' onclick='editTaskName(this)' onkeyup='enterTaskName(event, this, ${index})'
+                onblur='loseFocusTaskName(this, ${index})'>${task.name}</div>
+                <input type='checkbox'>
             </div>`
         )});
     }
+}
+
+function editTaskName(el) {
+    $(el).attr('contenteditable', 'true');
+    $('div[contenteditable="true"]').trigger('focus');
+    $('.task-text').css('cursor', 'auto');
+}
+
+function enterTaskName(e, el, index) {
+    switch(e.which) {
+        case 13:
+            currentList.tasks[index].name = $(el).text();
+            $(el).attr('contenteditable', 'false');
+            $('.task-text').css('cursor', 'pointer');
+    }
+}
+
+function loseFocusTaskName(el, index) {
+    currentList.tasks[index].name = $(el).text();
+    $(el).attr('contenteditable', 'false');
+    $('.task-text').css('cursor', 'pointer');
 }
 
 function updateArray(oldIndex, newIndex) {

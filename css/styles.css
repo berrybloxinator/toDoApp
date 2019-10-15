@@ -82,11 +82,19 @@ html, body {
       .container .right-container .tasks .new-task {
         border: 1px solid #ffffff;
         padding: 5px;
-        height: 30px;
-        margin: 5px 0; }
+        height: 40px;
+        margin: 5px 0;
+        display: flex;
+        align-items: center; }
+        .container .right-container .tasks .new-task .task-text {
+          cursor: pointer;
+          height: 100%;
+          padding: 0 10px;
+          min-width: 20px; }
         .container .right-container .tasks .new-task i {
-          margin-right: 5px;
           cursor: pointer; }
+        .container .right-container .tasks .new-task input {
+          padding: 10px; }
     .container .right-container .add-task-container {
       height: 40px;
       margin: 15px auto;
