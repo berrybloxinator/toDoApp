@@ -26,9 +26,9 @@ class List {
     addTask(e) {
         if (e.which === 13) {
             let myValue = $('#addTask').val();
-            if(!checkDuplicateName(myValue, currentList.tasks)) {
+            if(!checkDuplicateName(myValue, this.tasks)) {
                 let tempTask = new Task(myValue);
-                currentList.tasks.push(tempTask);
+                this.tasks.push(tempTask);
                 printTasks();
                 $('#addTask').val('');
             }
@@ -37,7 +37,7 @@ class List {
 
     removeTask(index, el) {
         $(el).parent().remove();
-        currentList.tasks.splice(index, 1);
+        this.tasks.splice(index, 1);
     }
 }
 
@@ -49,13 +49,21 @@ class Task {
 
 function clearCompletedTasks() {
     for (let i = 0; i < currentList.tasks.length; i++) {
-        let something = $('.tasks .new-task input').toArray();
-        if(something[i].checked) {
-            currentList.removeTask(i, something[i]);
+        let input = $('.tasks .new-task input').toArray();
+        if(input[i].checked) {
+            currentList.removeTask(i, input[i]);
             i--;
         }
     }
     printTasks();
+}
+
+function clearAll() {
+    for (let i = 0; i < currentList.tasks.length; i++) {
+        let input = $('.tasks .new-task input').toArray();
+        currentList.removeTask(i, input[i]);
+        i--;
+    }
 }
 
 function saveList(e) {
@@ -69,6 +77,7 @@ function saveList(e) {
             if(allLists.length > 0) {
                 $('.add-task').show();
                 $('.clearCompletedTasks').show();
+                $('.clearAll').show();
             }
             printLists();
             $('#addList').val('');
@@ -103,10 +112,10 @@ function removeList(index, el) {
             allLists.splice(index, 1);
             $('.add-task').hide();
             $('.clearCompletedTasks').hide();
+            $('.clearAll').hide();
             $('.tasks').html('');
             $('.title').html('');
         }
-
     });
 }
 
@@ -160,6 +169,7 @@ function enterTaskName(e, el, index) {
             currentList.tasks[index].name = $(el).text();
             $(el).attr('contenteditable', 'false');
             $('.task-text').css('cursor', 'pointer');
+            $(el).blur();
     }
 }
 
@@ -167,6 +177,8 @@ function loseFocusTaskName(el, index) {
     currentList.tasks[index].name = $(el).text();
     $(el).attr('contenteditable', 'false');
     $('.task-text').css('cursor', 'pointer');
+    document.activeElement.blur();
+    console.log(currentList.tasks);
 }
 
 function updateArray(oldIndex, newIndex) {
