@@ -144,7 +144,10 @@ function printTasks() {
                 <i class='fas fa-trash-alt' onclick='currentList.removeTask(${index}, this);printTasks();'></i>
                 <div class='task-text' onclick='editTaskName(this);' onkeyup='enterTaskName(event, this, ${index})'
                 onblur='loseFocusTaskName(this, ${index})'>${task.name}</div>
-                <input type='checkbox'>
+                <div class='checkboxFive'>
+                    <input type='checkbox' id='test${index}'>
+                    <label for='test${index}'></label>
+                </div> 
             </div>`
         )});
     }
@@ -177,8 +180,6 @@ function loseFocusTaskName(el, index) {
     currentList.tasks[index].name = $(el).text();
     $(el).attr('contenteditable', 'false');
     $('.task-text').css('cursor', 'pointer');
-    document.activeElement.blur();
-    console.log(currentList.tasks);
 }
 
 function updateArray(oldIndex, newIndex) {
