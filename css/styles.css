@@ -82,7 +82,11 @@ html, body {
       .container .right-container .tasks .new-task {
         border: 1px solid #ffffff;
         padding: 5px;
-        height: 30px; }
+        height: 30px;
+        margin: 5px 0; }
+        .container .right-container .tasks .new-task i {
+          margin-right: 5px;
+          cursor: pointer; }
     .container .right-container .add-task-container {
       height: 40px;
       margin: 15px auto;

@@ -22,37 +22,36 @@ class List {
         this.name = name;
         this.tasks = [];
     }
+
+    addTask(e) {
+        if (e.which === 13) {
+            let myValue = $('#addTask').val();
+            if(!checkDuplicateName(myValue, currentList.tasks)) {
+                let tempTask = new Task(myValue);
+                currentList.tasks.push(tempTask);
+                printTasks();
+                $('#addTask').val('');
+            }
+        }
+    }
+
+    removeTask(index, el) {
+        $(el).parent().remove();
+        currentList.tasks.splice(index, 1);
+    }
 }
 
 class Task {
     constructor(name) {
         this.name = name;
-        this.completed = false;
     }
-}
-
-function addTask(e) {
-    if (e.which === 13) {
-        let myValue = $('#addTask').val();
-        if(!checkDuplicateName(myValue, currentList.tasks)) {
-            let tempTask = new Task(myValue);
-            currentList.tasks.push(tempTask);
-            printTasks();
-            $('#addTask').val('');
-        }
-    }
-}
-
-function removeTask(index, el) {
-    $(el).parent().remove();
-    currentList.tasks.splice(index, 1);
 }
 
 function clearCompletedTasks() {
     for (let i = 0; i < currentList.tasks.length; i++) {
         let something = $('.tasks .new-task input').toArray();
         if(something[i].checked) {
-            removeTask(i, something[i]);
+            currentList.removeTask(i, something[i]);
             i--;
         }
     }
@@ -122,7 +121,7 @@ function printLists() {
     $('.title').html(currentList.name);
     $.each(allLists, (index, list) => {$('#lists').append(
         `<div class='new-list'>
-            <i class="fas fa-trash-alt" onclick='removeList(${index}, $(this).parent())'></i>
+            <i class='fas fa-trash-alt' onclick='removeList(${index}, $(this).parent())'></i>
             <div class='list-text' onclick='setCurrentList(${index})'>${list.name}</div>
         </div>`
     )});
@@ -133,7 +132,7 @@ function printTasks() {
     if (currentList.tasks.length > 0) {
         $.each(currentList.tasks, (index, task) => {$('.tasks').append(
             `<div class='new-task'>
-                <i class='fas fa-trash-alt'></i>${task.name}<input type='checkbox'>
+                <i class='fas fa-trash-alt' onclick='currentList.removeTask(${index}, this);printTasks();'></i>${task.name}<input type='checkbox'>
             </div>`
         )});
     }
