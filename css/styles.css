@@ -87,8 +87,9 @@ html, body {
         display: flex;
         align-items: center; }
         .container .right-container .tasks .new-task .task-text {
+          display: flex;
+          align-items: center;
           cursor: pointer;
-          height: 100%;
           padding: 0 10px;
           min-width: 20px; }
         .container .right-container .tasks .new-task i {

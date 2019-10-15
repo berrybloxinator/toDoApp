@@ -133,7 +133,7 @@ function printTasks() {
         $.each(currentList.tasks, (index, task) => {$('.tasks').append(
             `<div class='new-task'>
                 <i class='fas fa-trash-alt' onclick='currentList.removeTask(${index}, this);printTasks();'></i>
-                <div class='task-text' onclick='editTaskName(this)' onkeyup='enterTaskName(event, this, ${index})'
+                <div class='task-text' onclick='editTaskName(this);' onkeyup='enterTaskName(event, this, ${index})'
                 onblur='loseFocusTaskName(this, ${index})'>${task.name}</div>
                 <input type='checkbox'>
             </div>`
@@ -142,6 +142,13 @@ function printTasks() {
 }
 
 function editTaskName(el) {
+    //https://stackoverflow.com/questions/6139107/programmatically-select-text-in-a-contenteditable-html-element/6150060#6150060
+    let range = document.createRange();
+    range.selectNodeContents(el);
+    let sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+
     $(el).attr('contenteditable', 'true');
     $('div[contenteditable="true"]').trigger('focus');
     $('.task-text').css('cursor', 'auto');
