@@ -65,8 +65,8 @@ html, body {
       .container .right-container .clear-container .clearCompletedTasks, .container .right-container .clear-container .clearAll {
         width: 150px;
         height: 30px;
-        display: none;
-        margin: 5px; }
+        margin: 5px;
+        display: none; }
         .container .right-container .clear-container .clearCompletedTasks button, .container .right-container .clear-container .clearAll button {
           outline: none;
           border: 1px solid #ffffff;

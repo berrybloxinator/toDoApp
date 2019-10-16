@@ -1,21 +1,6 @@
 let allLists = [];
+let tempLists;
 let currentList;
-
-$(function() {
-    $('#lists').sortable({
-        //https://stackoverflow.com/questions/1601827/jquery-ui-sortable-how-to-determine-current-location-and-new-location-in-update
-        start: (e, ui) => {
-            $(this).attr('data-previndex', ui.item.index());
-        },
-
-        stop: (e, ui) => {
-            let oldIndex = $(this).attr('data-previndex');
-            $(this).removeAttr('data-previndex');
-            let newIndex = ui.item.index();
-            updateArray(oldIndex, newIndex);
-        }
-    });
-});
 
 class List {
     constructor(name) {
@@ -29,6 +14,7 @@ class List {
             if(!checkName(myValue, this.tasks)) {
                 let tempTask = new Task(myValue);
                 this.tasks.push(tempTask);
+                localStorage.setItem('lists', JSON.stringify(allLists));
                 printTasks();
                 $('#addTask').val('');
             }
@@ -46,6 +32,37 @@ class Task {
         this.name = name;
     }
 }
+
+$(function() {
+    tempLists = JSON.parse(localStorage.getItem("lists") || "[]");
+    if (tempLists.length > 0) {
+        for (let i = 0; i < tempLists.length; i++) {
+            let tempList = new List(tempLists[i].name);
+            tempList.tasks = tempLists[i].tasks;
+            allLists.push(tempList);
+        }
+
+        currentList = allLists[0];
+        $('.add-task').show();
+        $('.clearCompletedTasks').show();
+        $('.clearAll').show();
+        printLists();
+        printTasks();
+    }
+    $('#lists').sortable({
+        //https://stackoverflow.com/questions/1601827/jquery-ui-sortable-how-to-determine-current-location-and-new-location-in-update
+        start: (e, ui) => {
+            $(this).attr('data-previndex', ui.item.index());
+        },
+
+        stop: (e, ui) => {
+            let oldIndex = $(this).attr('data-previndex');
+            $(this).removeAttr('data-previndex');
+            let newIndex = ui.item.index();
+            updateArray(oldIndex, newIndex);
+        }
+    });
+});
 
 function clearCompletedTasks() {
     for (let i = 0; i < currentList.tasks.length; i++) {
@@ -71,11 +88,10 @@ function saveList(e) {
             currentList = tempObject;
             $('.tasks').html('');
             allLists.push(tempObject);
-            if(allLists.length > 0) {
-                $('.add-task').show();
-                $('.clearCompletedTasks').show();
-                $('.clearAll').show();
-            }
+            localStorage.setItem('lists', JSON.stringify(allLists));
+            $('.add-task').show();
+            $('.clearCompletedTasks').show();
+            $('.clearAll').show();
             printLists();
             $('#addList').val('');
         }
@@ -188,7 +204,7 @@ function updateArray(oldIndex, newIndex) {
     }
 
     let l = allLists.splice(oldIndex, 1);
-    allLists.esplice(newIndex, 0, l[0]);
+    allLists.splice(newIndex, 0, l[0]);
 }
 
 function checkName(value, array) {
