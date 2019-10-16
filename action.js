@@ -26,7 +26,7 @@ class List {
     addTask(e) {
         if (e.which === 13) {
             let myValue = $('#addTask').val();
-            if(!checkDuplicateName(myValue, this.tasks)) {
+            if(!checkName(myValue, this.tasks)) {
                 let tempTask = new Task(myValue);
                 this.tasks.push(tempTask);
                 printTasks();
@@ -50,7 +50,6 @@ class Task {
 function clearCompletedTasks() {
     for (let i = 0; i < currentList.tasks.length; i++) {
         let input = $('.tasks .new-task input').toArray();
-        console.log(input[i]);
         if(input[i].checked) {
             currentList.removeTask(i, $(input[i]).parent());
             i--;
@@ -67,7 +66,7 @@ function clearAll() {
 function saveList(e) {
     if(e.which === 13) {
         let myValue = $('#addList').val();
-        if(!checkDuplicateName(myValue, allLists)) {
+        if(!checkName(myValue, allLists)) {
             let tempObject = new List(myValue, allLists.length);
             currentList = tempObject;
             $('.tasks').html('');
@@ -189,10 +188,14 @@ function updateArray(oldIndex, newIndex) {
     }
 
     let l = allLists.splice(oldIndex, 1);
-    allLists.splice(newIndex, 0, l[0]);
+    allLists.esplice(newIndex, 0, l[0]);
 }
 
-function checkDuplicateName(value, array) {
+function checkName(value, array) {
+    if (value === '') {
+        alert(`You can't make an item with an empty name`);
+        return true;
+    }
     for (let obj of array) {
         if (obj.name === value) {
             alert(`You can't have more than one item with the same name`);
