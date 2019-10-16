@@ -50,8 +50,9 @@ class Task {
 function clearCompletedTasks() {
     for (let i = 0; i < currentList.tasks.length; i++) {
         let input = $('.tasks .new-task input').toArray();
+        console.log(input[i]);
         if(input[i].checked) {
-            currentList.removeTask(i, input[i]);
+            currentList.removeTask(i, $(input[i]).parent());
             i--;
         }
     }
@@ -59,11 +60,8 @@ function clearCompletedTasks() {
 }
 
 function clearAll() {
-    for (let i = 0; i < currentList.tasks.length; i++) {
-        let input = $('.tasks .new-task input').toArray();
-        currentList.removeTask(i, input[i]);
-        i--;
-    }
+    currentList.tasks = [];
+    printTasks();
 }
 
 function saveList(e) {
