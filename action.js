@@ -24,12 +24,14 @@ class List {
     removeTask(index, el) {
         $(el).parent().remove();
         this.tasks.splice(index, 1);
+        localStorage.setItem('lists', JSON.stringify(allLists));
     }
 }
 
 class Task {
     constructor(name) {
         this.name = name;
+        this.completed = false;
     }
 }
 
@@ -49,6 +51,7 @@ $(function() {
         printLists();
         printTasks();
     }
+
     $('#lists').sortable({
         //https://stackoverflow.com/questions/1601827/jquery-ui-sortable-how-to-determine-current-location-and-new-location-in-update
         start: (e, ui) => {
@@ -73,11 +76,13 @@ function clearCompletedTasks() {
         }
     }
     printTasks();
+    localStorage.setItem('lists', JSON.stringify(allLists));
 }
 
 function clearAll() {
     currentList.tasks = [];
     printTasks();
+    localStorage.setItem('lists', JSON.stringify(allLists));
 }
 
 function saveList(e) {
@@ -129,6 +134,8 @@ function removeList(index, el) {
             $('.tasks').html('');
             $('.title').html('');
         }
+
+        localStorage.setItem('lists', JSON.stringify(allLists));
     });
 }
 
@@ -159,7 +166,7 @@ function printTasks() {
                 onblur='loseFocusTaskName(this, ${index})'>${task.name}</div>
                 <div class='checkboxFive'>
                     <input type='checkbox' id='test${index}'>
-                    <label for='test${index}'></label>
+                    <label for='test${index}' onclick='changeCheck()'></label>
                 </div> 
             </div>`
         )});
@@ -187,12 +194,15 @@ function enterTaskName(e, el, index) {
             $('.task-text').css('cursor', 'pointer');
             $(el).blur();
     }
+
+    localStorage.setItem('lists', JSON.stringify(allLists));
 }
 
 function loseFocusTaskName(el, index) {
     currentList.tasks[index].name = $(el).text();
     $(el).attr('contenteditable', 'false');
     $('.task-text').css('cursor', 'pointer');
+    localStorage.setItem('lists', JSON.stringify(allLists));
 }
 
 function updateArray(oldIndex, newIndex) {
@@ -205,6 +215,7 @@ function updateArray(oldIndex, newIndex) {
 
     let l = allLists.splice(oldIndex, 1);
     allLists.splice(newIndex, 0, l[0]);
+    localStorage.setItem('lists', JSON.stringify(allLists));
 }
 
 function checkName(value, array) {
@@ -220,4 +231,8 @@ function checkName(value, array) {
     }
 
     return false;
+}
+
+function changeCheck() {
+
 }
