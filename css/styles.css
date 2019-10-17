@@ -56,7 +56,20 @@ html, body {
   .container .right-container {
     height: 100%;
     width: 70%;
-    overflow: auto; }
+    overflow: auto;
+    position: relative; }
+    .container .right-container button {
+      outline: none;
+      border: 1px solid #ffffff;
+      height: 30px;
+      width: 150px;
+      cursor: pointer;
+      border-radius: 8px;
+      background-color: #dd2f2f;
+      color: #ffffff;
+      position: absolute;
+      bottom: 10px;
+      right: 10px; }
     .container .right-container .clear-container {
       height: 40px;
       width: 100%;

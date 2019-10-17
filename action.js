@@ -250,3 +250,16 @@ function checkName(value, array) {
 function changeCheck(index) {
 
 }
+
+function clearEverything() {
+    if(confirm('Are you sure you want to delete all lists and tasks?')) {
+        localStorage.clear();
+        allLists = [];
+        printLists();
+        $('.add-task').hide();
+        $('.clearCompletedTasks').hide();
+        $('.clearAll').hide();
+        $('.tasks').html('');
+        $('.title').html('');
+    }
+}
