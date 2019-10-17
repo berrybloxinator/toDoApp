@@ -1,6 +1,7 @@
 let allLists = [];
 let tempLists;
 let currentList;
+let currentIndex;
 
 class List {
     constructor(name) {
@@ -36,6 +37,7 @@ class Task {
 }
 
 $(function() {
+    currentIndex = JSON.parse(localStorage.getItem('currentListIndex'));
     tempLists = JSON.parse(localStorage.getItem("lists") || "[]");
     if (tempLists.length > 0) {
         for (let i = 0; i < tempLists.length; i++) {
@@ -44,7 +46,7 @@ $(function() {
             allLists.push(tempList);
         }
 
-        currentList = allLists[0];
+        currentList = allLists[currentIndex];
         $('.add-task').show();
         $('.clearCompletedTasks').show();
         $('.clearAll').show();
@@ -89,10 +91,12 @@ function saveList(e) {
     if(e.which === 13) {
         let myValue = $('#addList').val();
         if(!checkName(myValue, allLists)) {
-            let tempObject = new List(myValue, allLists.length);
+            let tempObject = new List(myValue);
             currentList = tempObject;
             $('.tasks').html('');
             allLists.push(tempObject);
+            currentIndex = allLists.length - 1;
+            localStorage.setItem('currentListIndex', JSON.stringify(currentIndex));
             localStorage.setItem('lists', JSON.stringify(allLists));
             $('.add-task').show();
             $('.clearCompletedTasks').show();
@@ -113,6 +117,8 @@ function removeList(index, el) {
         if (allLists.length > 1 && allLists[index + 1] === undefined) {
             if(allLists[index].name === currentList.name) {
                 currentList = allLists[index - 1];
+                currentIndex = index - 1;
+                localStorage.setItem('currentListIndex', JSON.stringify(currentIndex));
             }
             allLists.splice(index, 1);
             printTasks();
@@ -121,13 +127,19 @@ function removeList(index, el) {
             if(allLists[index].name === currentList.name) {
                 allLists.splice(index, 1);
                 currentList = allLists[index];
+                localStorage.setItem('currentListIndex', JSON.stringify(currentIndex));
             } else {
                 allLists.splice(index, 1);
+                if(currentIndex > index) {
+                    currentIndex--;
+                    localStorage.setItem('currentListIndex', JSON.stringify(currentIndex));
+                }
             }
             printTasks();
             printLists();
         } else {
             allLists.splice(index, 1);
+            localStorage.setItem('currentListIndex', null);
             $('.add-task').hide();
             $('.clearCompletedTasks').hide();
             $('.clearAll').hide();
@@ -141,6 +153,8 @@ function removeList(index, el) {
 
 function setCurrentList(index) {
     currentList = allLists[index];
+    currentIndex = index;
+    localStorage.setItem('currentListIndex', JSON.stringify(currentIndex));
     $('.title').html(currentList.name);
     printTasks();
 }
@@ -233,6 +247,6 @@ function checkName(value, array) {
     return false;
 }
 
-function changeCheck() {
+function changeCheck(index) {
 
 }
