@@ -180,11 +180,13 @@ function printTasks() {
                 onblur='loseFocusTaskName(this, ${index})'>${task.name}</div>
                 <div class='checkboxFive'>
                     <input type='checkbox' id='test${index}'>
-                    <label for='test${index}' onclick='changeCheck()'></label>
+                    <label for='test${index}' onclick='changeCheck(${index})'></label>
                 </div> 
             </div>`
         )});
     }
+
+    displayCheck();
 }
 
 function editTaskName(el) {
@@ -248,7 +250,17 @@ function checkName(value, array) {
 }
 
 function changeCheck(index) {
+    let input = $('.tasks .new-task input').toArray();
+    let currentInput = input[index].checked;
+    currentList.tasks[index].completed = !currentInput;
+    localStorage.setItem('lists', JSON.stringify(allLists));
+}
 
+function displayCheck() {
+    let input = $('.tasks .new-task input').toArray();
+    for (let i = 0; i < currentList.tasks.length; i++) {
+        input[i].checked = currentList.tasks[i].completed;
+    }
 }
 
 function clearEverything() {

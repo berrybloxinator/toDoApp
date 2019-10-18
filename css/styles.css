@@ -58,7 +58,7 @@ html, body {
     width: 70%;
     overflow: auto;
     position: relative; }
-    .container .right-container button {
+    .container .right-container .clearEverything {
       outline: none;
       border: 1px solid #ffffff;
       height: 30px;
