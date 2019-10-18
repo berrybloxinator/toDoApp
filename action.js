@@ -68,7 +68,14 @@ $(function() {
             let oldIndex = $(this).attr('data-previndex');
             $(this).removeAttr('data-previndex');
             let newIndex = ui.item.index();
-            currentIndex = newIndex;
+            if (currentIndex === oldIndex) {
+                currentIndex = newIndex;
+            } else if (currentIndex < oldIndex && currentIndex >= newIndex) {
+                currentIndex++;
+            } else if (currentIndex > oldIndex && currentIndex <= newIndex) {
+                currentIndex--;
+            }
+
             localStorage.setItem('currentListIndex', JSON.stringify(currentIndex));
             updateArray(oldIndex, newIndex);
         }
