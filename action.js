@@ -53,6 +53,9 @@ $(function() {
         $('.clearEverything').show();
         printLists();
         printTasks();
+
+        let activeList = $('#lists > div').toArray();
+        $(activeList[currentIndex]).addClass('light-gray');
     }
 
     $('#lists').sortable({
@@ -65,6 +68,8 @@ $(function() {
             let oldIndex = $(this).attr('data-previndex');
             $(this).removeAttr('data-previndex');
             let newIndex = ui.item.index();
+            currentIndex = newIndex;
+            localStorage.setItem('currentListIndex', JSON.stringify(currentIndex));
             updateArray(oldIndex, newIndex);
         }
     });
@@ -105,6 +110,8 @@ function saveList(e) {
             $('.clearEverything').show();
             printLists();
             $('#addList').val('');
+            let activeList = $('#lists > div').toArray();
+            $(activeList[currentIndex]).addClass('light-gray');
         }
     }
 }
@@ -125,6 +132,8 @@ function removeList(index, el) {
             allLists.splice(index, 1);
             printTasks();
             printLists();
+            let activeList = $('#lists > div').toArray();
+            $(activeList[currentIndex]).addClass('light-gray');
         } else if (allLists.length > 1 && allLists[index + 1] !== undefined) {
             if(allLists[index].name === currentList.name) {
                 allLists.splice(index, 1);
@@ -139,6 +148,8 @@ function removeList(index, el) {
             }
             printTasks();
             printLists();
+            let activeList = $('#lists > div').toArray();
+            $(activeList[currentIndex]).addClass('light-gray');
         } else {
             allLists.splice(index, 1);
             localStorage.setItem('currentListIndex', null);
@@ -160,6 +171,9 @@ function setCurrentList(index) {
     localStorage.setItem('currentListIndex', JSON.stringify(currentIndex));
     $('.title').html(currentList.name);
     printTasks();
+    printLists();
+    let activeList = $('#lists > div').toArray();
+    $(activeList[currentIndex]).addClass('light-gray');
 }
 
 function printLists() {

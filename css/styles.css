@@ -14,6 +14,9 @@ html, body {
   background-color: #303030;
   color: #ffffff; }
 
+.light-gray {
+  background-color: #808080; }
+
 .container {
   height: 100%;
   width: 100%;
