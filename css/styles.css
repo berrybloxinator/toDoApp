@@ -58,18 +58,20 @@ html, body {
     width: 70%;
     overflow: auto;
     position: relative; }
-    .container .right-container .clearEverything {
-      outline: none;
-      border: 1px solid #ffffff;
-      height: 30px;
-      width: 150px;
-      cursor: pointer;
-      border-radius: 8px;
-      background-color: #dd2f2f;
-      color: #ffffff;
-      position: absolute;
-      bottom: 10px;
-      right: 10px; }
+    .container .right-container .clearEverythingContainer {
+      display: flex;
+      justify-content: flex-end; }
+      .container .right-container .clearEverythingContainer .clearEverything {
+        display: none;
+        outline: none;
+        border: 1px solid #ffffff;
+        height: 30px;
+        width: 150px;
+        cursor: pointer;
+        border-radius: 8px;
+        background-color: #dd2f2f;
+        color: #ffffff;
+        margin: 0 5px 5px 0; }
     .container .right-container .clear-container {
       height: 40px;
       width: 100%;

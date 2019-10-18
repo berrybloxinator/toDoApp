@@ -50,6 +50,7 @@ $(function() {
         $('.add-task').show();
         $('.clearCompletedTasks').show();
         $('.clearAll').show();
+        $('.clearEverything').show();
         printLists();
         printTasks();
     }
@@ -101,6 +102,7 @@ function saveList(e) {
             $('.add-task').show();
             $('.clearCompletedTasks').show();
             $('.clearAll').show();
+            $('.clearEverything').show();
             printLists();
             $('#addList').val('');
         }
@@ -143,6 +145,7 @@ function removeList(index, el) {
             $('.add-task').hide();
             $('.clearCompletedTasks').hide();
             $('.clearAll').hide();
+            $('.clearEverything').hide();
             $('.tasks').html('');
             $('.title').html('');
         }
@@ -271,6 +274,7 @@ function clearEverything() {
         $('.add-task').hide();
         $('.clearCompletedTasks').hide();
         $('.clearAll').hide();
+        $('.clearEverything').hide();
         $('.tasks').html('');
         $('.title').html('');
     }
