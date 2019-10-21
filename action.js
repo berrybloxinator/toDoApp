@@ -39,7 +39,7 @@ class Task {
 
 $(function() {
     currentIndex = JSON.parse(localStorage.getItem('currentListIndex'));
-    tempLists = JSON.parse(localStorage.getItem("lists") || "[]");
+    tempLists = JSON.parse(localStorage.getItem('lists') || '[]');
     if (tempLists.length > 0) {
         for (let i = 0; i < tempLists.length; i++) {
             let tempList = new List(tempLists[i].name);
@@ -225,7 +225,7 @@ function editTaskName(el) {
     sel.addRange(range);
 
     $(el).attr('contenteditable', 'true');
-    $('div[contenteditable="true"]').trigger('focus');
+    $('div[contenteditable='true']').trigger('focus');
     $('.task-text').css('cursor', 'auto');
 }
 
