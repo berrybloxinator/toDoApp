@@ -182,6 +182,8 @@ html, body {
 @media screen and (max-width: 800px) {
   .container .left-container, .container .right-container {
     width: 50%; }
+  .container .right-container .tasks {
+    width: 95%; }
   .container .right-container .add-task-container {
     width: 95%; }
   .container .right-container .clear-container {
@@ -194,4 +196,9 @@ html, body {
       margin: 0; }
       .container .right-container .clear-container .clearCompletedTasks button, .container .right-container .clear-container .clearAll button {
         width: 100%;
-        margin: 0 auto; } }
+        margin: 0 auto; }
+  .container .right-container .clearEverythingContainer {
+    width: 95%;
+    margin: 0 auto; }
+    .container .right-container .clearEverythingContainer .clearEverything {
+      margin: 0; } }
