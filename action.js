@@ -18,6 +18,7 @@ class List {
                 localStorage.setItem('lists', JSON.stringify(allLists));
                 printTasks();
                 $('#addTask').val('');
+                $('.right-container').scrollTop($('.right-container')[0].scrollHeight);
             }
         }
     }
@@ -56,6 +57,7 @@ $(function() {
 
         let activeList = $('#lists > div').toArray();
         $(activeList[currentIndex]).addClass('light-gray');
+        $('.left-container').scrollTop($('.left-container')[0].scrollHeight);
     }
 
     $('#lists').sortable({
@@ -119,6 +121,7 @@ function saveList(e) {
             $('#addList').val('');
             let activeList = $('#lists > div').toArray();
             $(activeList[currentIndex]).addClass('light-gray');
+            $('.left-container').scrollTop($('.left-container')[0].scrollHeight);
         }
     }
 }
