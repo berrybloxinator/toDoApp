@@ -225,7 +225,7 @@ function editTaskName(el) {
     sel.addRange(range);
 
     $(el).attr('contenteditable', 'true');
-    $('div[contenteditable='true']').trigger('focus');
+    $('div[contenteditable="true"]').trigger('focus');
     $('.task-text').css('cursor', 'auto');
 }
 
