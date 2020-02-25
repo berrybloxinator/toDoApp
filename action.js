@@ -230,12 +230,11 @@ function editTaskName(el) {
 }
 
 function enterTaskName(e, el, index) {
-    switch(e.which) {
-        case 13:
-            currentList.tasks[index].name = $(el).text();
-            $(el).attr('contenteditable', 'false');
-            $('.task-text').css('cursor', 'pointer');
-            $(el).blur();
+    if (e.which === 13) {
+        currentList.tasks[index].name = $(el).text();
+        $(el).attr('contenteditable', 'false');
+        $('.task-text').css('cursor', 'pointer');
+        $(el).blur();
     }
 
     localStorage.setItem('lists', JSON.stringify(allLists));

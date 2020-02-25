@@ -1,0 +1,24 @@
+$font-family: 'Brandon Grotesque', 'brandon-grotesque', Helvetica, sans-serif;
+$dark-gray: #303030;
+$light-gray: #808080;
+$white: #ffffff;
+$red: #dd2f2f;
+
+@font-face {
+  font-family: $font-family;
+  src: url('../brand_ssv/Brandon_reg.otf') format('opentype');
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  font-family: $font-family;
+  background-color: $dark-gray;
+  color: $white;
+}
